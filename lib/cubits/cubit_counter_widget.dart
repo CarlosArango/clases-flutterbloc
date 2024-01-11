@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_clases/cubits/counter_cubit.dart';
 
-class CounterWidget extends StatelessWidget {
-  const CounterWidget({super.key});
+class CubitCounterWidget extends StatelessWidget {
+  const CubitCounterWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
