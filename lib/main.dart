@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc_clases/bloc/counter/bloc_counter_widget.dart';
+
+import 'package:flutter_bloc_clases/flutter_bloc/form_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const BlocCounterWidget(),
+      home: const FormPage(),
     );
   }
 }
