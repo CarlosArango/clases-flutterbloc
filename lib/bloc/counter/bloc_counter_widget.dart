@@ -23,8 +23,6 @@ class BlocCounterWidget extends StatelessWidget {
                   stream: bloc.stream,
                   initialData: bloc.state,
                   builder: (context, snapshot) {
-                    print(snapshot.data);
-
                     return Text(
                       bloc.state.counter.toString(),
                       style: Theme.of(context).textTheme.headlineMedium,
@@ -40,13 +38,13 @@ class BlocCounterWidget extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  bloc.add(CounterIncrementBtnPressed());
+                  bloc.add(const CounterIncrementBtnPressed());
                 },
                 child: const Text("Incrementar"),
               ),
               ElevatedButton(
                 onPressed: () {
-                  bloc.add(CounterDecrementBtnPressed());
+                  bloc.add(const CounterDecrementBtnPressed());
                 },
                 child: const Text("Decrementar"),
               ),

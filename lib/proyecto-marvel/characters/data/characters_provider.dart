@@ -4,6 +4,7 @@ import 'package:flutter_bloc_clases/proyecto-marvel/characters/data/character_mo
 class CharactersProvider {
   Future<List<CharacterModel>> readBySearch(String value) async {
     Dio dio = Dio();
+    print('CharactersProvider.readBySearch');
     final response = await dio.get(
       'https://gateway.marvel.com/v1/public/characters',
       queryParameters: {

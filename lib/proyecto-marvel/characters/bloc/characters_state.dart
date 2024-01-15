@@ -1,15 +1,17 @@
 part of 'characters_bloc.dart';
 
-enum CharactersStatus { initial, loading, success, failure }
+enum CharactersStatus { initial, loading, successList, successSearch, failure }
 
 class CharactersState extends Equatable {
   const CharactersState({
     this.characters = const <CharacterModel>[],
     this.search = '',
     this.status = CharactersStatus.initial,
+    this.charactersSearched = const <CharacterModel>[],
   });
 
   final List<CharacterModel> characters;
+  final List<CharacterModel> charactersSearched;
   final String search;
   final CharactersStatus status;
 
@@ -19,11 +21,13 @@ class CharactersState extends Equatable {
     List<CharacterModel>? characters,
     String? search,
     CharactersStatus? status,
+    List<CharacterModel>? charactersSearched,
   }) {
     return CharactersState(
       characters: characters ?? this.characters,
       search: search ?? this.search,
       status: status ?? this.status,
+      charactersSearched: charactersSearched ?? this.charactersSearched,
     );
   }
 
@@ -31,10 +35,15 @@ class CharactersState extends Equatable {
     return copyWith(status: CharactersStatus.loading);
   }
 
-  CharactersState success(List<CharacterModel> characters) {
+  CharactersState successList() {
     return copyWith(
-      characters: characters,
-      status: CharactersStatus.success,
+      status: CharactersStatus.successList,
+    );
+  }
+
+  CharactersState successSearch() {
+    return copyWith(
+      status: CharactersStatus.successSearch,
     );
   }
 
@@ -44,7 +53,8 @@ class CharactersState extends Equatable {
 
   bool get isLoading => status == CharactersStatus.loading;
 
-  bool get isSuccess => status == CharactersStatus.success;
+  bool get isSuccessList => status == CharactersStatus.successList;
+  bool get isSuccessSearch => status == CharactersStatus.successSearch;
 
   bool get isFailure => status == CharactersStatus.failure;
 
@@ -53,5 +63,6 @@ class CharactersState extends Equatable {
         characters,
         search,
         status,
+        charactersSearched,
       ];
 }

@@ -7,7 +7,7 @@ part 'characters_event.dart';
 part 'characters_state.dart';
 
 EventTransformer<Event> debounce<Event>({
-  Duration duration = const Duration(milliseconds: 1000),
+  Duration duration = const Duration(milliseconds: 600),
 }) {
   return (events, mapper) => events.debounce(duration).switchMap(mapper);
 }
@@ -21,6 +21,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
       _onCharactersSearchChanged,
       transformer: debounce(),
     );
+    on<CharactersSearchSubmitted>(_onCharactersSearchSubmitted);
   }
 
   final CharactersRepository charactersRepository;
@@ -34,7 +35,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     final response = await charactersRepository.getCharactersByLetter('a');
     emit(
       state.copyWith(
-        status: CharactersStatus.success,
+        status: CharactersStatus.successList,
         characters: response,
       ),
     );
@@ -50,7 +51,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
         await charactersRepository.getCharactersByLetter(event.value);
     emit(
       state.copyWith(
-        status: CharactersStatus.success,
+        status: CharactersStatus.successList,
         characters: response,
       ),
     );
@@ -59,12 +60,39 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   void _onCharactersSearchChanged(
     CharactersSearchChanged event,
     Emitter<CharactersState> emit,
-  ) {
+  ) async {
+    if (event.search.isEmpty) {
+      emit(state.copyWith(charactersSearched: []));
+      return;
+    }
     emit(state.loading());
     emit(
+      state.copyWith(charactersSearched: []),
+    );
+    final response =
+        await charactersRepository.getCharactersBySearch(event.search);
+    emit(state.successSearch());
+    emit(
       state.copyWith(
-        search: event.search,
-        status: CharactersStatus.success,
+        charactersSearched: response,
+      ),
+    );
+  }
+
+  void _onCharactersSearchSubmitted(
+    CharactersSearchSubmitted event,
+    Emitter<CharactersState> emit,
+  ) async {
+    emit(state.loading());
+    emit(
+      state.copyWith(charactersSearched: []),
+    );
+    final response =
+        await charactersRepository.getCharactersBySearch(state.search);
+    emit(state.successSearch());
+    emit(
+      state.copyWith(
+        charactersSearched: response,
       ),
     );
   }

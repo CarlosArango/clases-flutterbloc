@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/bloc/characters_bloc.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/character_item_widget.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/loader.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});
@@ -69,7 +71,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
     required this.charactersBloc,
   });
 
-  final Bloc<CharactersEvent, CharactersState> charactersBloc;
+  final CharactersBloc charactersBloc;
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -95,14 +97,44 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
+    if (query.isEmpty) return Container();
     charactersBloc.add(
-      CharactersSearchChanged(query),
+      const CharactersSearchSubmitted(),
     );
-    return BlocBuilder(
+    return BlocConsumer<CharactersBloc, CharactersState>(
+      listener: (context, state) {
+        if (state.status == CharactersStatus.loading) {
+          Loader.show(context);
+        } else if (state.status == CharactersStatus.successSearch) {
+          Loader.hide(context);
+        }
+      },
       bloc: charactersBloc,
       builder: (context, state) {
-        print(state);
-        return Container();
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 32,
+          ),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 32,
+              crossAxisSpacing: 32,
+              crossAxisCount: 2,
+              childAspectRatio: .7,
+            ),
+            itemCount: state.charactersSearched.length,
+            padding: const EdgeInsets.only(
+              top: 32,
+            ),
+            itemBuilder: (content, index) {
+              final character = state.charactersSearched[index];
+              return CharacterItemWidget(
+                  name: character.name,
+                  image:
+                      '${character.thumbnail.path}.${character.thumbnail.extension}');
+            },
+          ),
+        );
       },
     );
   }
@@ -112,6 +144,37 @@ class CustomSearchDelegate extends SearchDelegate<String> {
     charactersBloc.add(
       CharactersSearchChanged(query),
     );
-    return Container();
+    return BlocBuilder<CharactersBloc, CharactersState>(
+      bloc: charactersBloc,
+      builder: (context, state) {
+        if (state.status == CharactersStatus.loading) {
+          return const LoaderWidget();
+        }
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 32,
+          ),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 32,
+              crossAxisSpacing: 32,
+              crossAxisCount: 2,
+              childAspectRatio: .7,
+            ),
+            itemCount: state.charactersSearched.length,
+            padding: const EdgeInsets.only(
+              top: 32,
+            ),
+            itemBuilder: (content, index) {
+              final character = state.charactersSearched[index];
+              return CharacterItemWidget(
+                  name: character.name,
+                  image:
+                      '${character.thumbnail.path}.${character.thumbnail.extension}');
+            },
+          ),
+        );
+      },
+    );
   }
 }

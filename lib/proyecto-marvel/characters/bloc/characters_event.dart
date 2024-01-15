@@ -26,3 +26,7 @@ class CharactersSearchChanged extends CharactersEvent {
   @override
   List<Object> get props => [search];
 }
+
+class CharactersSearchSubmitted extends CharactersEvent {
+  const CharactersSearchSubmitted();
+}
