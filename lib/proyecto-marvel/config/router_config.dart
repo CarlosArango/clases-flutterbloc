@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/characters/_children/detail/detail_page_args.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/characters/_children/detail/presenter/detail_page.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/bloc/characters_bloc.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/data/characters_provider.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/data/characters_repository.dart';
@@ -31,7 +33,13 @@ class RouterConfig {
               child: const CharactersPage(),
             ),
           ),
-          routes: [],
+          routes: [
+            GoRoute(
+              path: CharacterRoutes.characterDetail,
+              builder: (context, state) =>
+                  CharacterDetailPage(args: state.extra as DetailPageArgs),
+            )
+          ],
         ),
       ],
     );
@@ -40,5 +48,5 @@ class RouterConfig {
 
 class CharacterRoutes {
   static const String mainPage = '/characters';
-  static const String characterDetail = '/characters/:id';
+  static const String characterDetail = 'characters/detail';
 }

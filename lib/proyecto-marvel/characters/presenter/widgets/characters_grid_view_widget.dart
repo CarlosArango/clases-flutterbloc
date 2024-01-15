@@ -25,9 +25,11 @@ class CharactersGridViewWidget extends StatelessWidget {
             itemBuilder: (content, index) {
               final character = state.characters[index];
               return CharacterItemWidget(
-                  name: character.name,
-                  image:
-                      '${character.thumbnail.path}.${character.thumbnail.extension}');
+                name: character.name,
+                image:
+                    '${character.thumbnail.path}.${character.thumbnail.extension}',
+                comicsNumber: character.comics.available,
+              );
             },
           );
         },

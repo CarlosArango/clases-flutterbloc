@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/texts.dart';
 
 class CharacterItemWidget extends StatelessWidget {
-  const CharacterItemWidget(
-      {super.key, required this.name, required this.image});
+  const CharacterItemWidget({
+    super.key,
+    required this.name,
+    required this.image,
+    required this.comicsNumber,
+  });
 
   final String name;
   final String image;
+  final int comicsNumber;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -36,9 +41,9 @@ class CharacterItemWidget extends StatelessWidget {
               children: [
                 TextMedium(name),
                 const SizedBox(height: 2),
-                const TextSmall(
-                  'Comics 30',
-                  color: Color(0xFFFA4A0C),
+                TextSmall(
+                  'Comics ${comicsNumber.toString()}',
+                  color: const Color(0xFFFA4A0C),
                 ),
                 const SizedBox(height: 16),
               ],

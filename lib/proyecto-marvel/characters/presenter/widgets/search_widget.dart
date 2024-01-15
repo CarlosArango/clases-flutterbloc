@@ -130,9 +130,11 @@ class CustomSearchDelegate extends SearchDelegate<String> {
             itemBuilder: (content, index) {
               final character = state.charactersSearched[index];
               return CharacterItemWidget(
-                  name: character.name,
-                  image:
-                      '${character.thumbnail.path}.${character.thumbnail.extension}');
+                name: character.name,
+                image:
+                    '${character.thumbnail.path}.${character.thumbnail.extension}',
+                comicsNumber: character.comics.available,
+              );
             },
           ),
         );
@@ -169,9 +171,11 @@ class CustomSearchDelegate extends SearchDelegate<String> {
             itemBuilder: (content, index) {
               final character = state.charactersSearched[index];
               return CharacterItemWidget(
-                  name: character.name,
-                  image:
-                      '${character.thumbnail.path}.${character.thumbnail.extension}');
+                name: character.name,
+                image:
+                    '${character.thumbnail.path}.${character.thumbnail.extension}',
+                comicsNumber: character.comics.available,
+              );
             },
           ),
         );
