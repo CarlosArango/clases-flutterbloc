@@ -4,6 +4,7 @@ import 'package:flutter_bloc_clases/proyecto-marvel/characters/bloc/characters_b
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/widgets/characters_grid_view_widget.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/widgets/search_widget.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/widgets/tabs_widget.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/loader.dart';
 
 class CharactersPage extends StatelessWidget {
   const CharactersPage({super.key});
@@ -25,9 +26,20 @@ class _ViewProvided extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFF9F9F9),
-      body: _Body(),
+    return BlocListener<CharactersBloc, CharactersState>(
+      listener: (context, state) {
+        print("listener ${state.status}");
+        if (state.status == CharactersStatus.loading) {
+          Loader.show(context);
+        } else if (state.status == CharactersStatus.successList) {
+          Loader.hide(context);
+        }
+      },
+      listenWhen: (previous, current) => previous.status != current.status,
+      child: const Scaffold(
+        backgroundColor: Color(0xFFF9F9F9),
+        body: _Body(),
+      ),
     );
   }
 }

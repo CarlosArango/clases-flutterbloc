@@ -1,6 +1,13 @@
 part of 'characters_bloc.dart';
 
-enum CharactersStatus { initial, loading, successList, successSearch, failure }
+enum CharactersStatus {
+  initial,
+  loading,
+  searching,
+  successList,
+  successSearch,
+  failure
+}
 
 class CharactersState extends Equatable {
   const CharactersState({
@@ -33,6 +40,10 @@ class CharactersState extends Equatable {
 
   CharactersState loading() {
     return copyWith(status: CharactersStatus.loading);
+  }
+
+  CharactersState searching() {
+    return copyWith(status: CharactersStatus.searching);
   }
 
   CharactersState successList() {

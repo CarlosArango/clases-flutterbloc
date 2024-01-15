@@ -31,7 +31,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     Emitter<CharactersState> emit,
   ) async {
     emit(state.loading());
-    print('CharactersBloc._onCharactersStarted');
+
     final response = await charactersRepository.getCharactersByLetter('a');
     emit(
       state.copyWith(
@@ -46,15 +46,11 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     Emitter<CharactersState> emit,
   ) async {
     emit(state.loading());
-
+    emit(state.copyWith(characters: []));
     final response =
         await charactersRepository.getCharactersByLetter(event.value);
-    emit(
-      state.copyWith(
-        status: CharactersStatus.successList,
-        characters: response,
-      ),
-    );
+    emit(state.copyWith(
+        status: CharactersStatus.successList, characters: response));
   }
 
   void _onCharactersSearchChanged(
@@ -65,7 +61,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
       emit(state.copyWith(charactersSearched: []));
       return;
     }
-    emit(state.loading());
+    emit(state.searching());
     emit(
       state.copyWith(charactersSearched: []),
     );
@@ -83,7 +79,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     CharactersSearchSubmitted event,
     Emitter<CharactersState> emit,
   ) async {
-    emit(state.loading());
+    emit(state.searching());
     emit(
       state.copyWith(charactersSearched: []),
     );
@@ -95,5 +91,10 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
         charactersSearched: response,
       ),
     );
+  }
+
+  @override
+  void onChange(Change<CharactersState> change) {
+    super.onChange(change);
   }
 }

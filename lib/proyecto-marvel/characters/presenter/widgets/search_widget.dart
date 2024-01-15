@@ -103,12 +103,13 @@ class CustomSearchDelegate extends SearchDelegate<String> {
     );
     return BlocConsumer<CharactersBloc, CharactersState>(
       listener: (context, state) {
-        if (state.status == CharactersStatus.loading) {
+        if (state.status == CharactersStatus.searching) {
           Loader.show(context);
         } else if (state.status == CharactersStatus.successSearch) {
           Loader.hide(context);
         }
       },
+      listenWhen: (previous, current) => previous.status != current.status,
       bloc: charactersBloc,
       builder: (context, state) {
         return Padding(
@@ -147,7 +148,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
     return BlocBuilder<CharactersBloc, CharactersState>(
       bloc: charactersBloc,
       builder: (context, state) {
-        if (state.status == CharactersStatus.loading) {
+        if (state.status == CharactersStatus.searching) {
           return const LoaderWidget();
         }
         return Padding(
