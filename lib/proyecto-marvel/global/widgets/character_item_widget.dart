@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/texts.dart';
 
 class CharacterItemWidget extends StatelessWidget {
-  const CharacterItemWidget({super.key});
+  const CharacterItemWidget(
+      {super.key, required this.name, required this.image});
 
+  final String name;
+  final String image;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -28,16 +31,16 @@ class CharacterItemWidget extends StatelessWidget {
                 )
               ],
             ),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextMedium('Spider man'),
-                SizedBox(height: 2),
-                TextSmall(
+                TextMedium(name),
+                const SizedBox(height: 2),
+                const TextSmall(
                   'Comics 30',
                   color: Color(0xFFFA4A0C),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
               ],
             ),
           ),
@@ -49,8 +52,8 @@ class CharacterItemWidget extends StatelessWidget {
                 width: 100,
                 height: 100,
                 decoration: ShapeDecoration(
-                  image: const DecorationImage(
-                    image: NetworkImage("https://via.placeholder.com/111x111"),
+                  image: DecorationImage(
+                    image: NetworkImage(image),
                     fit: BoxFit.fill,
                   ),
                   shape: RoundedRectangleBorder(

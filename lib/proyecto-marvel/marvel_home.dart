@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/config/router_config.dart';
-import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/character_item_widget.dart';
 
 import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/texts.dart';
 import 'package:go_router/go_router.dart';
@@ -69,29 +68,6 @@ class MarvelHome extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class GridViewCharacters extends StatelessWidget {
-  const GridViewCharacters({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 32,
-        crossAxisSpacing: 32,
-        crossAxisCount: 2,
-        childAspectRatio: .7,
-      ),
-      itemCount: 3,
-      padding: const EdgeInsets.only(
-        top: 32,
-      ),
-      itemBuilder: (content, index) {
-        return const CharacterItemWidget();
-      },
     );
   }
 }

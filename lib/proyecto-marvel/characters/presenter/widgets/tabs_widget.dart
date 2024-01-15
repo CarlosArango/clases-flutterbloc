@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/characters/bloc/characters_bloc.dart';
 
 class TabsWidget extends StatelessWidget {
   const TabsWidget({super.key});
@@ -30,6 +32,11 @@ class _TabBarLettersState extends State<_TabBarLetters>
   Widget build(BuildContext context) {
     return TabBar(
       controller: _tabController,
+      onTap: (value) {
+        context
+            .read<CharactersBloc>()
+            .add(CharactersTabChanged(letters()[value]));
+      },
       unselectedLabelColor: const Color(0xFF99999D),
       unselectedLabelStyle: const TextStyle(
         fontSize: 17,
@@ -59,7 +66,8 @@ class _TabBarLettersState extends State<_TabBarLetters>
       tabs: [
         ...letters()
             .map((letter) => Padding(
-                padding: const EdgeInsets.only(right: 70), child: Text(letter)))
+                padding: const EdgeInsets.only(right: 80, left: 10),
+                child: Text(letter)))
             .toList(),
       ],
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide RouterConfig;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/bloc/characters_bloc.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/characters/bloc/characters_bloc.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/widgets/characters_grid_view_widget.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/widgets/search_widget.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/presenter/widgets/tabs_widget.dart';
@@ -10,8 +10,11 @@ class CharactersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CharactersBloc(),
+    return BlocProvider<CharactersBloc>(
+      create: (context) => context.read<CharactersBloc>()
+        ..add(
+          CharactersStarted(),
+        ),
       child: const _ViewProvided(),
     );
   }
