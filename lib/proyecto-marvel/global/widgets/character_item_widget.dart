@@ -7,68 +7,74 @@ class CharacterItemWidget extends StatelessWidget {
     required this.name,
     required this.image,
     required this.comicsNumber,
+    required this.onTap,
   });
 
   final String name;
   final String image;
   final int comicsNumber;
+
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 240,
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: [
-          Container(
-            height: 200,
-            margin: const EdgeInsets.only(top: 40),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: 240,
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: [
+            Container(
+              height: 200,
+              margin: const EdgeInsets.only(top: 40),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x19393939),
+                    blurRadius: 60,
+                    offset: Offset(0, 30),
+                    spreadRadius: 0,
+                  )
+                ],
               ),
-              shadows: const [
-                BoxShadow(
-                  color: Color(0x19393939),
-                  blurRadius: 60,
-                  offset: Offset(0, 30),
-                  spreadRadius: 0,
-                )
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextMedium(name),
-                const SizedBox(height: 2),
-                TextSmall(
-                  'Comics ${comicsNumber.toString()}',
-                  color: const Color(0xFFFA4A0C),
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
-          Positioned.fill(
-            top: 0,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(image),
-                    fit: BoxFit.fill,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextMedium(name),
+                  const SizedBox(height: 2),
+                  TextSmall(
+                    'Comics ${comicsNumber.toString()}',
+                    color: const Color(0xFFFA4A0C),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                ),
+                  const SizedBox(height: 16),
+                ],
               ),
             ),
-          ),
-        ],
+            Positioned.fill(
+              top: 0,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: ShapeDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(image),
+                      fit: BoxFit.fill,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

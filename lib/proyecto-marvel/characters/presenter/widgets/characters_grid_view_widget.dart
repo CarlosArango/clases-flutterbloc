@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/characters/_children/detail/detail_page_args.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/characters/bloc/characters_bloc.dart';
+import 'package:flutter_bloc_clases/proyecto-marvel/config/router_config.dart';
 import 'package:flutter_bloc_clases/proyecto-marvel/global/widgets/character_item_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class CharactersGridViewWidget extends StatelessWidget {
   const CharactersGridViewWidget({super.key});
@@ -29,6 +32,12 @@ class CharactersGridViewWidget extends StatelessWidget {
                 image:
                     '${character.thumbnail.path}.${character.thumbnail.extension}',
                 comicsNumber: character.comics.available,
+                onTap: () {
+                  context.goNamed(
+                    CharacterRoutes.characterDetail,
+                    extra: DetailPageArgs(character: character),
+                  );
+                },
               );
             },
           );

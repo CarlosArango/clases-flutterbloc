@@ -134,6 +134,9 @@ class CustomSearchDelegate extends SearchDelegate<String> {
                 image:
                     '${character.thumbnail.path}.${character.thumbnail.extension}',
                 comicsNumber: character.comics.available,
+                onTap: () {
+                  close(context, character.name);
+                },
               );
             },
           ),
@@ -175,6 +178,9 @@ class CustomSearchDelegate extends SearchDelegate<String> {
                 image:
                     '${character.thumbnail.path}.${character.thumbnail.extension}',
                 comicsNumber: character.comics.available,
+                onTap: () {
+                  close(context, character.name);
+                },
               );
             },
           ),

@@ -36,6 +36,7 @@ class RouterConfig {
           routes: [
             GoRoute(
               path: CharacterRoutes.characterDetail,
+              name: CharacterRoutes.characterDetail,
               builder: (context, state) =>
                   CharacterDetailPage(args: state.extra as DetailPageArgs),
             )
@@ -48,5 +49,6 @@ class RouterConfig {
 
 class CharacterRoutes {
   static const String mainPage = '/characters';
-  static const String characterDetail = 'characters/detail';
+  static const String characterDetail = 'character-detail';
+  static const String characterDetailName = '$mainPage/$characterDetail';
 }
